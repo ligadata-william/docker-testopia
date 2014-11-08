@@ -1,0 +1,6 @@
+
+
+http://www.webopius.com/content/231/how-to-get-bugzilla-working-with-the-nginx-web-server
+
+# http://www.quzart.com/notes/6-bugzilla-nginx-fcgi/index.xhtml
+# http://www.aireadfun.com/blog/2013/02/01/install-bugzilla-4-dot-2-4-on-ubuntu-12-dot-04/

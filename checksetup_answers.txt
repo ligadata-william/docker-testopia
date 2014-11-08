@@ -1,8 +1,8 @@
- $answer{'db_host'}   = 'localhost';
+ $answer{'db_host'}   = 'db';
  $answer{'db_driver'} = 'mysql';
- $answer{'db_port'}   = 3307;
+ $answer{'db_port'}   = 3306;
  $answer{'db_name'}   = 'bugs',
- $answer{'db_user'}   = 'bugs';
+ $answer{'db_user'}   = 'admin';
  $answer{'db_pass'}   = 'bugs';
  $answer{'db_sock'}   = '';
  $answer{'db_check'}  = 1;
