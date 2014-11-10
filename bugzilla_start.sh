@@ -1,15 +1,17 @@
-#!/bin/bash
-# docker run -d -t --privileged \
-#     --name bugzilla \
-#     --hostname bugzilla \
-#     --publish 8080:80 \
-#     --publish 2222:22 \
-#     --volume /sys/fs/cgroup:/sys/fs/cgroup:ro \
-#     dklawren/docker-bugzilla 
+# mysql container 
+docker run -d -p 3307:3306 -e MYSQL_PASS="bugs" --name mysql tutum/mysql
+# manually create db named bugs;
+mysql --host=0.0.0.0 --port=3307 -pbugs -uadmin 
+> create database bugs;
+> \q
+# 
 
+# build this instance (if neeeded)
 docker build -rm -t romanlv/docker-testopia .
 
-docker rm -f testopia 
+
+# run it (rm part is optional, needed if rebuilding)
+docker rm -f testopia && \
 docker run -d -t \
     --name testopia \
     --link mysql:db \
@@ -19,6 +21,7 @@ docker run -d -t \
     romanlv/docker-testopia
 
 
-docker exec -it testopia bash
+# only first - init database, set permissions and restart
+docker exec testopia sh db_config.sh && docker restart testopia 
 
-docker run -d -p 3307:3306 -e MYSQL_PASS="bugs" --name mysql tutum/mysql
+

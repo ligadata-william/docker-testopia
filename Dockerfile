@@ -42,17 +42,21 @@ ADD testopia_config.sh /home/bugzilla/testopia_config.sh
 RUN cd /home/bugzilla/; chmod 755 testopia_config.sh && sh testopia_config.sh
 
 # Final permissions fix
-RUN usermod -g bugzilla www-data
-RUN chmod 751 /home/bugzilla
-RUN chown -R www-data:www-data /home/bugzilla
+RUN usermod -a -G bugzilla www-data
+# RUN chmod 765 /home/bugzilla
+# RUN chown bugzilla:bugzilla -R  /home/bugzilla/
 
 EXPOSE 80
 
 # Nginx configuration 
+RUN apt-get -y install  libcgi-fast-perl
 ADD fastcgi_config.sh /home/bugzilla/fastcgi_config.sh
-RUN cd /home/bugzilla; chmod 755 fastcgi_config.sh && sh fastcgi_config.sh
+RUN cd /home/bugzilla; chmod 775 fastcgi_config.sh && sh fastcgi_config.sh
 RUN rm /etc/nginx/sites-enabled/*
 ADD nginx.conf /etc/nginx/sites-enabled/bugzilla
+
+# DB config script 
+ADD db_config.sh /home/bugzilla/db_config.sh
 
 # Supervisor
 ADD supervisord.conf /etc/supervisord.conf
