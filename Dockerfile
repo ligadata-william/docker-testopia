@@ -50,8 +50,10 @@ EXPOSE 80
 
 # Nginx configuration 
 RUN apt-get -y install  libcgi-fast-perl
-ADD fastcgi_config.sh /home/bugzilla/fastcgi_config.sh
-RUN cd /home/bugzilla; chmod 775 fastcgi_config.sh && sh fastcgi_config.sh
+ADD fastcgi-wrapper.pl /usr/local/bin/fastcgi-wrapper
+RUN chmod 0755 /usr/local/bin/fastcgi-wrapper
+# ADD fastcgi_config.sh /home/bugzilla/fastcgi_config.sh
+# RUN cd /home/bugzilla; chmod 775 fastcgi_config.sh && sh fastcgi_config.sh
 RUN rm /etc/nginx/sites-enabled/*
 ADD nginx.conf /etc/nginx/sites-enabled/bugzilla
 
